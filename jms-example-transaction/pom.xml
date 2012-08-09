@@ -21,32 +21,10 @@
 
     <profiles>
         <profile>
-            <id>chatter</id>
+            <id>client</id>
             <build>
                 <defaultGoal>package</defaultGoal>
                 <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-enforcer-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>enforce-property</id>
-                                <phase>initialize</phase>
-                                <goals>
-                                    <goal>enforce</goal>
-                                </goals>
-                                <configuration>
-                                    <rules>
-                                        <requireProperty>
-                                            <property>chatName</property>
-                                            <message>You must define a chatName (e.g. -DchatName=Chatter-One)</message>
-                                        </requireProperty>
-                                    </rules>
-                                    <fail>true</fail>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
@@ -57,14 +35,7 @@
                                     <goal>java</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>com.fusesource.activemq.exercises.transactedchat.TransactedChat
-                                    </mainClass>
-                                    <systemProperties>
-                                        <systemProperty>
-                                            <key>ChatName</key>
-                                            <value>${chatName}</value>
-                                        </systemProperty>
-                                    </systemProperties>
+                                    <mainClass>example.transaction.Client</mainClass>
                                 </configuration>
                             </execution>
                         </executions>

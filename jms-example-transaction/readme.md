@@ -16,4 +16,9 @@ Run:
 
 ## Running the Examples
 
+    mvn -Pclient
 
+    You will be greeted with a prompt. You can type a message and press enter. Nothing will actually be sent to
+    a consumer until you type `COMMIT` and press enter. After doing so, you should see the built-in consumer
+    consume the message and output it. If you type `ROLLBACK`, your message will be rolledback and the consumer
+    will not have an opportunity to see it. Hit ^C to exit
