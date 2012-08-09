@@ -8,8 +8,6 @@
         <version>0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <artifactId>jms-example-topic</artifactId>
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -17,6 +15,7 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+    <artifactId>jms-example-durable-sub</artifactId>
     <profiles>
         <profile>
             <id>subscriber</id>
@@ -33,7 +32,13 @@
                                     <goal>java</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>example.topic.Subscriber</mainClass>
+                                    <mainClass>example.topic.durable.Subscriber</mainClass>
+                                    <systemProperties>
+                                        <systemProperty>
+                                            <key>clienId</key>
+                                            <value>${clientId}</value>
+                                        </systemProperty>
+                                    </systemProperties>
                                 </configuration>
                             </execution>
                         </executions>
@@ -57,7 +62,7 @@
                                     <goal>java</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>example.topic.Publisher</mainClass>
+                                    <mainClass>example.topic.durable.Publisher</mainClass>
                                 </configuration>
                             </execution>
                         </executions>
@@ -66,6 +71,5 @@
             </build>
         </profile>
     </profiles>
-
 
 </project>

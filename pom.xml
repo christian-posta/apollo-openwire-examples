@@ -28,6 +28,9 @@
         <module>jms-example-queue</module>
         <module>jms-example-topic</module>
         <module>jms-example-exclusive-consumer</module>
+        <module>jms-example-transaction</module>
+        <module>jms-example-util</module>
+        <module>jms-example-durable-sub</module>
     </modules>
 
     <name>OpenWire example</name>

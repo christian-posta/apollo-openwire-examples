@@ -9,7 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>jms-example-topic</artifactId>
+    <artifactId>jms-example-transaction</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -17,36 +18,35 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
+
     <profiles>
         <profile>
-            <id>subscriber</id>
+            <id>chatter</id>
             <build>
                 <defaultGoal>package</defaultGoal>
                 <plugins>
                     <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-enforcer-plugin</artifactId>
                         <executions>
                             <execution>
-                                <phase>package</phase>
+                                <id>enforce-property</id>
+                                <phase>initialize</phase>
                                 <goals>
-                                    <goal>java</goal>
+                                    <goal>enforce</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>example.topic.Subscriber</mainClass>
+                                    <rules>
+                                        <requireProperty>
+                                            <property>chatName</property>
+                                            <message>You must define a chatName (e.g. -DchatName=Chatter-One)</message>
+                                        </requireProperty>
+                                    </rules>
+                                    <fail>true</fail>
                                 </configuration>
                             </execution>
                         </executions>
                     </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>publisher</id>
-            <build>
-                <defaultGoal>package</defaultGoal>
-                <plugins>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
                         <artifactId>exec-maven-plugin</artifactId>
@@ -57,7 +57,14 @@
                                     <goal>java</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>example.topic.Publisher</mainClass>
+                                    <mainClass>com.fusesource.activemq.exercises.transactedchat.TransactedChat
+                                    </mainClass>
+                                    <systemProperties>
+                                        <systemProperty>
+                                            <key>ChatName</key>
+                                            <value>${chatName}</value>
+                                        </systemProperty>
+                                    </systemProperties>
                                 </configuration>
                             </execution>
                         </executions>
@@ -66,6 +73,4 @@
             </build>
         </profile>
     </profiles>
-
-
 </project>
