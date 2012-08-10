@@ -31,7 +31,7 @@ public class Publisher {
     private static final String BROKER_HOST = "tcp://localhost:%d";
     private static final int BROKER_PORT = Integer.valueOf(Util.env("BROKER_PORT", "61616"));
     private static final String BROKER_URL = String.format(BROKER_HOST, BROKER_PORT);
-    private static final Boolean TRANSACTED = false;
+    private static final Boolean NON_TRANSACTED = false;
     private static final int NUM_MESSAGES_TO_SEND = 100;
     private static final long DELAY = 100;
 
@@ -45,7 +45,7 @@ public class Publisher {
             connection = connectionFactory.createConnection();
             connection.start();
 
-            Session session = connection.createSession(TRANSACTED, Session.AUTO_ACKNOWLEDGE);
+            Session session = connection.createSession(NON_TRANSACTED, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createTopic("test-topic");
             MessageProducer producer = session.createProducer(destination);
 

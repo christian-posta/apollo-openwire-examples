@@ -36,6 +36,7 @@ public class Client {
 
     // this is set to true
     private static final Boolean TRANSACTED = true;
+    private static final Boolean NON_TRANSACTED = false;
 
     public static void main(String[] args) {
 
@@ -48,7 +49,7 @@ public class Client {
             Topic destination = new ActiveMQTopic("transacted.client.example");
 
             Session senderSession = connection.createSession(TRANSACTED, Session.AUTO_ACKNOWLEDGE);
-            Session receiverSession = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            Session receiverSession = connection.createSession(NON_TRANSACTED, Session.AUTO_ACKNOWLEDGE);
             MessageConsumer receiver = receiverSession.createConsumer(destination);
             receiver.setMessageListener(new MessageListener() {
                 @Override

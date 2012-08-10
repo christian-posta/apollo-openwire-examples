@@ -8,6 +8,9 @@
         <version>0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>jms-example-wildcard-consumer</artifactId>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
@@ -15,10 +18,10 @@
             <version>${project.version}</version>
         </dependency>
     </dependencies>
-    <artifactId>jms-example-durable-sub</artifactId>
+
     <profiles>
         <profile>
-            <id>subscriber</id>
+            <id>consumer</id>
             <build>
                 <defaultGoal>package</defaultGoal>
                 <plugins>
@@ -32,31 +35,7 @@
                                     <goal>java</goal>
                                 </goals>
                                 <configuration>
-                                    <mainClass>example.topic.durable.Subscriber</mainClass>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-
-        <profile>
-            <id>publisher</id>
-            <build>
-                <defaultGoal>package</defaultGoal>
-                <plugins>
-                    <plugin>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>exec-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <phase>package</phase>
-                                <goals>
-                                    <goal>java</goal>
-                                </goals>
-                                <configuration>
-                                    <mainClass>example.topic.durable.Publisher</mainClass>
+                                    <mainClass>example.wildcard.Client</mainClass>
                                 </configuration>
                             </execution>
                         </executions>

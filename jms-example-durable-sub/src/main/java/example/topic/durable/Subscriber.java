@@ -33,7 +33,7 @@ public class Subscriber implements MessageListener {
     private static final String BROKER_HOST = "tcp://localhost:%d";
     private static final int BROKER_PORT = Integer.valueOf(Util.env("BROKER_PORT", "61616"));
     private static final String BROKER_URL = String.format(BROKER_HOST, BROKER_PORT);
-    private static final Boolean TRANSACTED = false;
+    private static final Boolean NON_TRANSACTED = false;
 
 
     private final CountDownLatch countDownLatch;
@@ -55,7 +55,7 @@ public class Subscriber implements MessageListener {
 
             connection.start();
 
-            Session session = connection.createSession(TRANSACTED, Session.AUTO_ACKNOWLEDGE);
+            Session session = connection.createSession(NON_TRANSACTED, Session.AUTO_ACKNOWLEDGE);
             Topic destination = session.createTopic("test-topic");
 
             MessageConsumer consumer = session.createDurableSubscriber(destination, clientId) ;
