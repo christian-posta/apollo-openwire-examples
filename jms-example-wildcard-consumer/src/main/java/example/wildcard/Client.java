@@ -32,7 +32,7 @@ public class Client {
     private static final Logger LOG = LoggerFactory.getLogger(Client.class);
     private static final Boolean NON_TRANSACTED = false;
     private static final String BROKER_HOST = "tcp://localhost:%d";
-    private static final int BROKER_PORT = Integer.valueOf(Util.env("BROKER_PORT", "61616"));
+    private static final int BROKER_PORT = Util.getBrokerPort();
     private static final String BROKER_URL = String.format(BROKER_HOST, BROKER_PORT);
 
     public static void main(String[] args) {

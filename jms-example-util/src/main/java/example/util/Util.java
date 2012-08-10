@@ -20,6 +20,7 @@ package example.util;
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
 public class Util {
+    private static final String DEFAULT_PORT = "61613";
 
     public static String env(String key, String defaultValue) {
         String rc = System.getenv(key);
@@ -28,5 +29,9 @@ public class Util {
         } else {
             return rc;
         }
+    }
+
+    public static int getBrokerPort() {
+        return Integer.valueOf(Util.env("BROKER_PORT", DEFAULT_PORT));
     }
 }

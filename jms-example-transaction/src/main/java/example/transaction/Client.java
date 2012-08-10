@@ -31,7 +31,7 @@ import java.util.Scanner;
 public class Client {
     private static final Logger LOG = LoggerFactory.getLogger(Client.class);
     private static final String BROKER_HOST = "tcp://localhost:%d";
-    private static final int BROKER_PORT = Integer.valueOf(Util.env("BROKER_PORT", "61616"));
+    private static final int BROKER_PORT = Util.getBrokerPort();
     private static final String BROKER_URL = String.format(BROKER_HOST, BROKER_PORT);
 
     // this is set to true
