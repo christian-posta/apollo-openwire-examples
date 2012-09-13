@@ -32,6 +32,7 @@
         <module>jms-example-util</module>
         <module>jms-example-durable-sub</module>
         <module>jms-example-wildcard-consumer</module>
+        <module>jms-example-temp-destinations</module>
     </modules>
 
     <name>OpenWire example</name>
