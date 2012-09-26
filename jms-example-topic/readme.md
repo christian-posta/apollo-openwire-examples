@@ -1,6 +1,7 @@
 ## Overview
 
 This is an example of how to use the ActiveMQ 5.x / OpenWire protocol to communicate with Apollo
+
 This example does basic publish-subscribe messaging using Topics
 
 ## Prereqs

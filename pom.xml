@@ -33,6 +33,9 @@
         <module>jms-example-durable-sub</module>
         <module>jms-example-wildcard-consumer</module>
         <module>jms-example-temp-destinations</module>
+        <module>jms-example-message-browser</module>
+        <module>jms-example-queue-selector</module>
+        <module>jms-example-composite-destinations</module>
     </modules>
 
     <name>OpenWire example</name>
@@ -66,7 +69,6 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.6.4</version>
         </dependency>
-
     </dependencies>
 
     <build>

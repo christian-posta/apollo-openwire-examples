@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.queue.exclusive;
+package example.queue.selector;
 
 import example.util.Util;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -26,17 +26,17 @@ import javax.jms.*;
 /**
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
-public class Producer {
-    private static final Logger LOG = LoggerFactory.getLogger(Producer.class);
+public class Consumer {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Consumer.class);
     private static final String BROKER_HOST = "tcp://localhost:%d";
     private static final int BROKER_PORT = Util.getBrokerPort();
     private static final String BROKER_URL = String.format(BROKER_HOST, BROKER_PORT);
     private static final Boolean NON_TRANSACTED = false;
-    private static final int NUM_MESSAGES_TO_SEND = 100;
-    private static final long DELAY = 100;
+    private static final long TIMEOUT = 20000;
 
     public static void main(String[] args) {
-
+        LOG.info("\nWaiting to receive messages... will timeout after " + TIMEOUT / 1000 +"s");
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("admin", "password", BROKER_URL);
         Connection connection = null;
 
@@ -47,16 +47,23 @@ public class Producer {
 
             Session session = connection.createSession(NON_TRANSACTED, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue("test-queue");
-            MessageProducer producer = session.createProducer(destination);
+            MessageConsumer consumer = session.createConsumer(destination, "intended = 'me'");
 
-            for (int i = 0; i < NUM_MESSAGES_TO_SEND; i++) {
-                TextMessage message = session.createTextMessage("Message #" + i);
-                LOG.info("Sending message #" + i);
-                producer.send(message);
-                Thread.sleep(DELAY);
+            int i = 0;
+            while (true) {
+                Message message = consumer.receive(TIMEOUT);
+
+                if (message != null) {
+                    if (message instanceof TextMessage) {
+                        String text = ((TextMessage) message).getText();
+                        LOG.info("Got " + i++ + ". message: " + text);
+                    }
+                } else {
+                    break;
+                }
             }
 
-            producer.close();
+            consumer.close();
             session.close();
 
         } catch (Exception e) {
@@ -72,5 +79,4 @@ public class Producer {
             }
         }
     }
-
 }

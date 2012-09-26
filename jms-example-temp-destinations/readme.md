@@ -2,7 +2,7 @@
 
 This is an example of how to use the ActiveMQ 5.x / OpenWire protocol to communicate with Apollo
 
-This example does basic publish-subscribe messaging using Topics
+This example shows how to do request response with temporary destinations
 
 ## Prereqs
 
@@ -19,11 +19,10 @@ Run:
 
 In one terminal window run:
 
-    mvn -Psubscriber -DclientId=<client_id_goes_here>
+    mvn -Pconsumer
 
 In another terminal window run:
 
-    mvn -Ppublisher
+    mvn -Pproducer
 
-You can kill the subscriber at any point and it will not miss messages because the subscription it creates
-is durable
+You'll notice that the producer received a reply for the request it sent.

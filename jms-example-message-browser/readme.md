@@ -2,7 +2,7 @@
 
 This is an example of how to use the ActiveMQ 5.x / OpenWire protocol to communicate with Apollo
 
-This example does basic point-to-point messaging using Queues
+This example demos how to browse a queue without consuming from it
 
 ## Prereqs
 
@@ -17,10 +17,12 @@ Run:
 
 ## Running the Examples
 
-In one terminal window run:
+Run these steps in order:
 
-    mvn -Pconsumer
-
-In another terminal window run:
+1. In one terminal window run:
 
     mvn -Pproducer
+
+2. In another terminal window run:
+
+    mvn -Pbrowser

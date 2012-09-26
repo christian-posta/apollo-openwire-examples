@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.queue.exclusive;
+package example.browser;
 
 import example.util.Util;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -22,17 +22,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
+import java.util.Enumeration;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
-public class Producer {
-    private static final Logger LOG = LoggerFactory.getLogger(Producer.class);
+public class Browser {
+    private static final Logger LOG = LoggerFactory.getLogger(Browser.class);
     private static final String BROKER_HOST = "tcp://localhost:%d";
     private static final int BROKER_PORT = Util.getBrokerPort();
     private static final String BROKER_URL = String.format(BROKER_HOST, BROKER_PORT);
     private static final Boolean NON_TRANSACTED = false;
-    private static final int NUM_MESSAGES_TO_SEND = 100;
     private static final long DELAY = 100;
 
     public static void main(String[] args) {
@@ -46,17 +47,16 @@ public class Producer {
             connection.start();
 
             Session session = connection.createSession(NON_TRANSACTED, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = session.createQueue("test-queue");
-            MessageProducer producer = session.createProducer(destination);
+            Queue destination = session.createQueue("test-queue");
+            QueueBrowser browser = session.createBrowser(destination);
+            Enumeration enumeration = browser.getEnumeration();
 
-            for (int i = 0; i < NUM_MESSAGES_TO_SEND; i++) {
-                TextMessage message = session.createTextMessage("Message #" + i);
-                LOG.info("Sending message #" + i);
-                producer.send(message);
-                Thread.sleep(DELAY);
+            while (enumeration.hasMoreElements()) {
+                TextMessage message = (TextMessage) enumeration.nextElement();
+                System.out.println("Browsing: " + message);
+                TimeUnit.MILLISECONDS.sleep(DELAY);
             }
 
-            producer.close();
             session.close();
 
         } catch (Exception e) {
@@ -72,5 +72,4 @@ public class Producer {
             }
         }
     }
-
 }

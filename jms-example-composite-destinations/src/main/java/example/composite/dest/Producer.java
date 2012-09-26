@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.queue.exclusive;
+package example.composite.dest;
 
 import example.util.Util;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -46,7 +46,7 @@ public class Producer {
             connection.start();
 
             Session session = connection.createSession(NON_TRANSACTED, Session.AUTO_ACKNOWLEDGE);
-            Destination destination = session.createQueue("test-queue");
+            Destination destination = session.createQueue("test-queue,test-queue-foo,test-queue-bar,topic://test-topic-foo");
             MessageProducer producer = session.createProducer(destination);
 
             for (int i = 0; i < NUM_MESSAGES_TO_SEND; i++) {

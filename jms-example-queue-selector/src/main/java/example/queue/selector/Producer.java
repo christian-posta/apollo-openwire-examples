@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package example.queue.exclusive;
+package example.queue.selector;
 
 import example.util.Util;
 import org.apache.activemq.ActiveMQConnectionFactory;
@@ -52,6 +52,13 @@ public class Producer {
             for (int i = 0; i < NUM_MESSAGES_TO_SEND; i++) {
                 TextMessage message = session.createTextMessage("Message #" + i);
                 LOG.info("Sending message #" + i);
+                if (i % 2 == 0) {
+                    LOG.info("Sending to me");
+                    message.setStringProperty("intended", "me");
+                } else {
+                    LOG.info("Sending to you");
+                    message.setStringProperty("intended", "you");
+                }
                 producer.send(message);
                 Thread.sleep(DELAY);
             }

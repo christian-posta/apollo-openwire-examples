@@ -27,7 +27,7 @@ import javax.jms.*;
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
 public class Producer {
-    private static final Logger LOG = LoggerFactory.getLogger(Consumer.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Producer.class);
     private static final String BROKER_HOST = "tcp://localhost:%d";
     private static final int BROKER_PORT = Util.getBrokerPort();
     private static final String BROKER_URL = String.format(BROKER_HOST, BROKER_PORT);

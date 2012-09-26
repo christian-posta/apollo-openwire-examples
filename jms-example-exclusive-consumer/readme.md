@@ -1,7 +1,8 @@
 ## Overview
 
 This is an example of how to use the ActiveMQ 5.x / OpenWire protocol to communicate with Apollo
-This example does basic point-to-point messaging using Queues
+
+This example demos using exclusive consumers (one single consumer)
 
 ## Prereqs
 
