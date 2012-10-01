@@ -18,8 +18,6 @@ package example.queue;
 
 import example.util.Util;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.jms.*;
 
@@ -27,7 +25,6 @@ import javax.jms.*;
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
 public class Producer {
-    private static final Logger LOG = LoggerFactory.getLogger(Producer.class);
     private static final String BROKER_HOST = "tcp://localhost:%d";
     private static final int BROKER_PORT = Util.getBrokerPort();
     private static final String BROKER_URL = String.format(BROKER_HOST, BROKER_PORT);
@@ -37,6 +34,7 @@ public class Producer {
 
     public static void main(String[] args) {
 
+        System.out.println("Using connection: " + BROKER_URL);
         ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory("admin", "password", BROKER_URL);
         Connection connection = null;
 
@@ -45,13 +43,14 @@ public class Producer {
             connection = connectionFactory.createConnection();
             connection.start();
 
+            System.out.println("Started Connection...");
             Session session = connection.createSession(NON_TRANSACTED, Session.AUTO_ACKNOWLEDGE);
             Destination destination = session.createQueue("test-queue");
             MessageProducer producer = session.createProducer(destination);
 
             for (int i = 0; i < NUM_MESSAGES_TO_SEND; i++) {
                 TextMessage message = session.createTextMessage("Message #" + i);
-                LOG.info("Sending message #" + i);
+                System.out.println("Sending message #" + i);
                 producer.send(message);
                 Thread.sleep(DELAY);
             }
@@ -60,14 +59,14 @@ public class Producer {
             session.close();
 
         } catch (Exception e) {
-            LOG.error("Caught exception!", e);
+            System.out.println("Caught exception!");
         }
         finally {
             if (connection != null) {
                 try {
                     connection.close();
                 } catch (JMSException e) {
-                    LOG.error("Could not close an open connection...", e);
+                    System.out.println("Could not close an open connection...");
                 }
             }
         }
